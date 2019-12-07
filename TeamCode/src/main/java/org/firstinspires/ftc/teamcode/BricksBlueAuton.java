@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Autonomous
-public class BricksAuton extends OpMode {
+public class BricksBlueAuton extends OpMode {
     DcMotor backLeft;
     DcMotor backRight;
     DcMotor frontLeft;
@@ -88,7 +88,7 @@ public class BricksAuton extends OpMode {
 
         }
         else if(step == 3){
-            strafeRight(4000);
+            strafeLeft(4000);
         }
         step++;
     }
@@ -101,7 +101,7 @@ public class BricksAuton extends OpMode {
         }
     }
     public void moveForward(long millis){
-        frontLeft.setPower(-.3);
+        frontLeft.setPower(-.3)hbc   cd                                                                                   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------;
         frontRight.setPower(-.3);
         backLeft.setPower(-.3);
         backRight.setPower(-.3);
@@ -227,3 +227,5 @@ public class BricksAuton extends OpMode {
 
 
 }
+
+-***************  *

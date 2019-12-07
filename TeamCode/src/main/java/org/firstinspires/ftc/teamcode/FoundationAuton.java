@@ -51,6 +51,7 @@ public class FoundationAuton extends OpMode {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         imu.initialize(parameters);
+
     }
     @Override
     public void init_loop(){
@@ -68,29 +69,47 @@ public class FoundationAuton extends OpMode {
     @Override
     public void loop(){
         if(step == 0){
-            moveBackward(400);
+            hinge.setPosition(.3);
         }
-        if(step == 1){
-            strafeLeft(400);
+        else if(step == 1){
+            leftActuator.setTargetPosition(-900);
+            rightActuator.setTargetPosition(-900);
+            leftActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftActuator.setPower(-.3);
+            rightActuator.setPower(-.3);
+            while(leftActuator.isBusy() && rightActuator.isBusy()){
+
+            }
+            leftActuator.setPower(0);
+            rightActuator.setPower(0);
         }
+        else if(step == 2){
+            moveForward(300);
+        }
+        else if(step == 3){
+            strafeLeft(4000);
+        }
+        telemetry.addData("Hinge Position: ", hinge.getPosition());
+        telemetry.update();
         stopAllMotors();
         step++;
-        telemetry.addData("IMU Velocity: ", imu.getVelocity());
         sleep(500);
+
     }
 
     public void sleep(long millis) {
         try {
-            sleep(millis);
+            Thread.sleep(millis);
         } catch (Exception e) {
             System.out.print(e.getStackTrace());
         }
     }
     public void moveForward(long millis){
-        frontLeft.setPower(-.5);
-        frontRight.setPower(-.5);
-        backLeft.setPower(-.5);
-        backRight.setPower(-.5);
+        frontLeft.setPower(-.3);
+        frontRight.setPower(-.3);
+        backLeft.setPower(-.3);
+        backRight.setPower(-.3);
         sleep(millis);
     }
 

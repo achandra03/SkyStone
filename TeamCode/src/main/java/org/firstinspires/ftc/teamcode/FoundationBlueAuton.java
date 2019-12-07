@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Autonomous
-public class BricksAuton extends OpMode {
+public class FoundationBlueAuton extends OpMode {
     DcMotor backLeft;
     DcMotor backRight;
     DcMotor frontLeft;
@@ -50,6 +51,7 @@ public class BricksAuton extends OpMode {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         imu.initialize(parameters);
+
     }
     @Override
     public void init_loop(){
@@ -66,18 +68,14 @@ public class BricksAuton extends OpMode {
     }
     @Override
     public void loop(){
-
-        if(step == 2){
-            moveForward(300);
-        }
-        else if(step == 0){
+        if(step == 0){
             hinge.setPosition(.3);
         }
         else if(step == 1){
-            leftActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftActuator.setTargetPosition(-900);
             rightActuator.setTargetPosition(-900);
+            leftActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftActuator.setPower(-.3);
             rightActuator.setPower(-.3);
             while(leftActuator.isBusy() && rightActuator.isBusy()){
@@ -85,12 +83,19 @@ public class BricksAuton extends OpMode {
             }
             leftActuator.setPower(0);
             rightActuator.setPower(0);
-
+        }
+        else if(step == 2){
+            moveForward(300);
         }
         else if(step == 3){
             strafeRight(4000);
         }
+        telemetry.addData("Hinge Position: ", hinge.getPosition());
+        telemetry.update();
+        stopAllMotors();
         step++;
+        sleep(500);
+
     }
 
     public void sleep(long millis) {
@@ -106,17 +111,8 @@ public class BricksAuton extends OpMode {
         backLeft.setPower(-.3);
         backRight.setPower(-.3);
         sleep(millis);
-        stopAllMotors();
     }
 
-    public void moveForward(long millis, double speed){
-        frontLeft.setPower(-1*speed);
-        frontRight.setPower(-1*speed);
-        backLeft.setPower(-1*speed);
-        backRight.setPower(-1*speed);
-        sleep(millis);
-        stopAllMotors();
-    }
 
     public void moveBackward(long millis){
         frontLeft.setPower(.3);
@@ -124,7 +120,6 @@ public class BricksAuton extends OpMode {
         backLeft.setPower(.3);
         backRight.setPower(.3);
         sleep(millis);
-        stopAllMotors();
     }
 
     public void strafeLeft(long millis){
@@ -133,7 +128,6 @@ public class BricksAuton extends OpMode {
         frontRight.setPower(-.3);
         backRight.setPower(.3);
         sleep(millis);
-        stopAllMotors();
     }
 
     public void strafeRight(long millis){
@@ -142,7 +136,6 @@ public class BricksAuton extends OpMode {
         frontRight.setPower(.3);
         backRight.setPower(-.3);
         sleep(millis);
-        stopAllMotors();
     }
 
     public void rotateRight(double degrees){
