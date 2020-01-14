@@ -69,29 +69,14 @@ public class FoundationBlueAuton extends OpMode {
     @Override
     public void loop(){
         if(step == 0){
-            hinge.setPosition(.3);
-        }
-        else if(step == 1){
-            leftActuator.setTargetPosition(-900);
-            rightActuator.setTargetPosition(-900);
-            leftActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftActuator.setPower(-.3);
-            rightActuator.setPower(-.3);
-            while(leftActuator.isBusy() && rightActuator.isBusy()){
-
-            }
-            leftActuator.setPower(0);
-            rightActuator.setPower(0);
-        }
-        else if(step == 2){
+            hinge.setPosition(.5);
+        } else if(step == 1){
+            lowerActuator();
+        } else if(step == 2){
             moveForward(300);
+        } else if(step == 3){
+            strafeRight(2000);
         }
-        else if(step == 3){
-            strafeRight(4000);
-        }
-        telemetry.addData("Hinge Position: ", hinge.getPosition());
-        telemetry.update();
         stopAllMotors();
         step++;
         sleep(500);
@@ -148,6 +133,20 @@ public class FoundationBlueAuton extends OpMode {
 
         }
         stopAllMotors();
+    }
+
+    public void lowerActuator(){
+        leftActuator.setTargetPosition(-900);
+        rightActuator.setTargetPosition(-900);
+        leftActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftActuator.setPower(-.3);
+        rightActuator.setPower(-.3);
+        while(leftActuator.isBusy() && rightActuator.isBusy()){
+
+        }
+        leftActuator.setPower(0);
+        rightActuator.setPower(0);
     }
 
     public void rotateLeft(double degrees){

@@ -69,32 +69,41 @@ public class FoundationAuton extends OpMode {
     @Override
     public void loop(){
         if(step == 0){
-            hinge.setPosition(.3);
-        }
-        else if(step == 1){
-            leftActuator.setTargetPosition(-900);
-            rightActuator.setTargetPosition(-900);
-            leftActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftActuator.setPower(-.3);
-            rightActuator.setPower(-.3);
-            while(leftActuator.isBusy() && rightActuator.isBusy()){
-
-            }
-            leftActuator.setPower(0);
-            rightActuator.setPower(0);
-        }
-        else if(step == 2){
-            moveForward(300);
-        }
-        else if(step == 3){
+            hinge.setPosition(.8);
+            moveForward(1300);
+        } else if(step == 1){
+            strafeRight(800);
+        } else if(step == 2){
+            rotateRight(160);
+        } else if(step == 3){
+            moveBackward(500);
+        } else if(step == 4){
+            rightPlatform.setPosition(1);
+            leftPlatform.setPosition(0);
+            sleep(300);
+        } else if(step == 5){
+            moveForward(2300);
+        } else if(step == 6){
+            moveBackward(200);
+        } else if(step == 7){
+            rightPlatform.setPosition(0);
+            leftPlatform.setPosition(1);
+        } else if(step == 8){
+            moveForward(200);
+        } else if(step == 9){
+            strafeRight(4000);
+        } else if(step == 10){
+          rotateLeft(180 - Math.abs(getAngle()));
+        } else if(step == 11){
+            moveBackward(1500);
+        } else if(step == 12){
             strafeLeft(4000);
+        } else if(step == 13){
+            moveForward(1500);
         }
-        telemetry.addData("Hinge Position: ", hinge.getPosition());
-        telemetry.update();
         stopAllMotors();
         step++;
-        sleep(500);
+        sleep(300);
 
     }
 
@@ -141,24 +150,47 @@ public class FoundationAuton extends OpMode {
     public void rotateRight(double degrees){
         resetAngle();
         backRight.setPower(.3);
-        backLeft.setPower(.3);
-        frontRight.setPower(-.3);
-        backRight.setPower(-.3);
-        while(getAngle() < degrees){
-
+        backLeft.setPower(-.3);
+        frontRight.setPower(.3);
+        frontLeft.setPower(-.3);
+        while(Math.abs(getAngle()) < degrees){
+            telemetry.addData("Current Angle: ", getAngle());
+            telemetry.update();
         }
         stopAllMotors();
     }
 
+    public void turnToDegree(int degrees){
+        if(getAngle() > degrees){
+            rotateLeft(getAngle() - degrees);
+        } else if(getAngle() < degrees){
+            rotateRight(degrees - getAngle());
+        }
+    }
+
+    public void lowerActuator(){
+        leftActuator.setTargetPosition(-900);
+        rightActuator.setTargetPosition(-900);
+        leftActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightActuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftActuator.setPower(-.3);
+        rightActuator.setPower(-.3);
+        while(leftActuator.isBusy() && rightActuator.isBusy()){
+
+        }
+        leftActuator.setPower(0);
+        rightActuator.setPower(0);
+    }
+
     public void rotateLeft(double degrees){
-        degrees = -degrees;
         resetAngle();
         backRight.setPower(-.3);
-        backLeft.setPower(-.3);
-        frontRight.setPower(.3);
-        backRight.setPower(.3);
-        while(getAngle() < degrees){
-
+        backLeft.setPower(.3);
+        frontRight.setPower(-.3);
+        frontLeft.setPower(.3);
+        while(Math.abs(getAngle()) < degrees){
+            telemetry.addData("Current Angle: ", getAngle());
+            telemetry.update();
         }
         stopAllMotors();
     }

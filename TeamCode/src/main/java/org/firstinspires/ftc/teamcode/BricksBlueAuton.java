@@ -101,7 +101,7 @@ public class BricksBlueAuton extends OpMode {
         }
     }
     public void moveForward(long millis){
-        frontLeft.setPower(-.3)hbc   cd                                                                                   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------;
+        frontLeft.setPower(-.3);
         frontRight.setPower(-.3);
         backLeft.setPower(-.3);
         backRight.setPower(-.3);
@@ -227,5 +227,3 @@ public class BricksBlueAuton extends OpMode {
 
 
 }
-
--***************  *
