@@ -69,17 +69,45 @@ public class FoundationBlueAuton extends OpMode {
     @Override
     public void loop(){
         if(step == 0){
-            hinge.setPosition(.5);
+            hinge.setPosition(.8);
+            moveForward(1100);
         } else if(step == 1){
-            lowerActuator();
+            strafeLeft(1400);
         } else if(step == 2){
-            moveForward(300);
+            rotateLeft(170);
         } else if(step == 3){
-            strafeRight(2000);
+            moveBackward(1000);
+        } else if(step == 4){
+            rightPlatform.setPosition(1);
+            leftPlatform.setPosition(0);
+            sleep(300);
+        } else if(step == 5){
+            moveForward(2300);
+        } else if(step == 6){
+            moveBackward(200);
+        } else if(step == 7){
+            rightPlatform.setPosition(0);
+            leftPlatform.setPosition(1);
+        } else if(step == 8){
+            moveForward(200);
+        } else if(step == 9){
+            strafeLeft(3800);
+        } else if(step == 10){
+            rotateLeft(175 - Math.abs(getAngle()));
+        } else if(step == 11){
+            moveBackward(1700);
+        } else if(step == 12){
+            strafeRight(4000);
+        } else if(step == 13){
+            moveForward(2100);
+        } else if(step == 14){
+            hinge.setPosition(.3);
+        } else if(step == 15){
+            strafeLeftFast(2000);
         }
         stopAllMotors();
         step++;
-        sleep(500);
+        sleep(300);
 
     }
 
@@ -98,6 +126,13 @@ public class FoundationBlueAuton extends OpMode {
         sleep(millis);
     }
 
+    public void strafeLeftFast(long millis){
+        frontLeft.setPower(.6);
+        backLeft.setPower(-.6);
+        frontRight.setPower(-.6);
+        backRight.setPower(.6);
+        sleep(millis);
+    }
 
     public void moveBackward(long millis){
         frontLeft.setPower(.3);
@@ -123,16 +158,33 @@ public class FoundationBlueAuton extends OpMode {
         sleep(millis);
     }
 
+    public void strafeRightFast(long millis){
+        frontLeft.setPower(-.6);
+        backLeft.setPower(.6);
+        frontRight.setPower(.6);
+        backRight.setPower(-.6);
+        sleep(millis);
+    }
+
     public void rotateRight(double degrees){
         resetAngle();
         backRight.setPower(.3);
-        backLeft.setPower(.3);
-        frontRight.setPower(-.3);
-        backRight.setPower(-.3);
-        while(getAngle() < degrees){
-
+        backLeft.setPower(-.3);
+        frontRight.setPower(.3);
+        frontLeft.setPower(-.3);
+        while(Math.abs(getAngle()) < degrees){
+            telemetry.addData("Current Angle: ", getAngle());
+            telemetry.update();
         }
         stopAllMotors();
+    }
+
+    public void turnToDegree(int degrees){
+        if(getAngle() > degrees){
+            rotateLeft(getAngle() - degrees);
+        } else if(getAngle() < degrees){
+            rotateRight(degrees - getAngle());
+        }
     }
 
     public void lowerActuator(){
@@ -150,14 +202,14 @@ public class FoundationBlueAuton extends OpMode {
     }
 
     public void rotateLeft(double degrees){
-        degrees = -degrees;
         resetAngle();
         backRight.setPower(-.3);
-        backLeft.setPower(-.3);
-        frontRight.setPower(.3);
-        backRight.setPower(.3);
-        while(getAngle() < degrees){
-
+        backLeft.setPower(.3);
+        frontRight.setPower(-.3);
+        frontLeft.setPower(.3);
+        while(Math.abs(getAngle()) < degrees){
+            telemetry.addData("Current Angle: ", getAngle());
+            telemetry.update();
         }
         stopAllMotors();
     }

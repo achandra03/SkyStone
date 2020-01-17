@@ -70,7 +70,7 @@ public class FoundationAuton extends OpMode {
     public void loop(){
         if(step == 0){
             hinge.setPosition(.8);
-            moveForward(1300);
+            moveForward(1200);
         } else if(step == 1){
             strafeRight(800);
         } else if(step == 2){
@@ -99,7 +99,11 @@ public class FoundationAuton extends OpMode {
         } else if(step == 12){
             strafeLeft(4000);
         } else if(step == 13){
-            moveForward(1500);
+            moveForward(2700);
+        } else if(step == 14){
+            hinge.setPosition(.3);
+        } else if(step == 15){
+            strafeRightFast(1800);
         }
         stopAllMotors();
         step++;
@@ -144,6 +148,14 @@ public class FoundationAuton extends OpMode {
         backLeft.setPower(.3);
         frontRight.setPower(.3);
         backRight.setPower(-.3);
+        sleep(millis);
+    }
+
+    public void strafeRightFast(long millis){
+        frontLeft.setPower(-.6);
+        backLeft.setPower(.6);
+        frontRight.setPower(.6);
+        backRight.setPower(-.6);
         sleep(millis);
     }
 
